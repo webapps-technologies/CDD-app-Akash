@@ -1,26 +1,80 @@
-import { Injectable } from '@nestjs/common';
-import { CreateWhyChoseUsDto } from './dto/create-why-chose-us.dto';
-import { UpdateWhyChoseUsDto } from './dto/update-why-chose-us.dto';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { WhyChoseUsDto } from './dto/why-chose-us.dto';
+import { title } from 'process';
+import { WhyChoseUs } from './entities/why-chose-us.entity';
+import { CommonPaginationDto } from 'src/common/dto/common-pagination.dto';
+
+
 
 @Injectable()
 export class WhyChoseUsService {
-  create(createWhyChoseUsDto: CreateWhyChoseUsDto) {
-    return 'This action adds a new whyChoseUs';
-  }
+  
+ constructor(
+  @InjectRepository (WhyChoseUs) private readonly whychooseusrepo:Repository<WhyChoseUs>,
+ ){}
 
-  findAll() {
-    return `This action returns all whyChoseUs`;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} whyChoseUs`;
-  }
+  async create(dto:WhyChoseUsDto) {
+           const result = await this.whychooseusrepo.findOne({
+             where: { title: dto.title,
+                      content:dto.content,
+              },
+           });
+           if (result) {
+             throw new ConflictException(' whychose us  already exists!');
+           }
+           const obj = Object.assign(dto);
+           return this.whychooseusrepo.save(obj);
+         }
 
-  update(id: number, updateWhyChoseUsDto: UpdateWhyChoseUsDto) {
-    return `This action updates a #${id} whyChoseUs`;
-  }
+         async findAll(dto: CommonPaginationDto) {
+          const keyword = dto.keyword || '';
+      
+          const queryBuilder = this.whychooseusrepo.createQueryBuilder('blog');
+      
+          if (keyword) {
+              queryBuilder.andWhere(
+                  '(blog.title LIKE :keyword OR blog.description LIKE :keyword)', 
+                  { keyword: `%${keyword}%` }
+              );
+          }
+      
+          queryBuilder.take(dto.limit).skip(dto.offset);
+      
+          const [result, count] = await queryBuilder.getManyAndCount();
+      
+          return { result, count };
+      }
+      
+        async findOne(id:string){
+          const result = await this.whychooseusrepo.findOne({
+            where:{id:id}
+          });
+          if(!result){
+            throw new NotFoundException('   why choose us not found..!')
+          }
+          return result;
+        }
+      
+        async update(id:string, dto:WhyChoseUsDto){
+          const result = await this.whychooseusrepo.findOne({where:{id:id}});
+          if(!result){
+            throw new NotFoundException('why choose us not found...!')
+          }
+          const obj = Object.assign(result,dto);
+          return this.whychooseusrepo.save(obj);
+        }
+      
+        async image(image:string, result:WhyChoseUs){
+          const obj = Object.assign(result,{
+            image:process.env.PORT + image,
+            imagePath:image,
+          });
+          return this.whychooseusrepo.save(obj);
+        }
+        
 
-  remove(id: number) {
-    return `This action removes a #${id} whyChoseUs`;
-  }
+  
 }

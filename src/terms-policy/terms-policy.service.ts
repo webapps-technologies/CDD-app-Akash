@@ -27,8 +27,6 @@ export class TermsPolicyService {
         }
  
 
-  
-  
         async find(dto: PaginationDto) {
               const keyword = dto.keyword || '';
               const [result, total] = await this.termsPolicyRepository.findAndCount({
