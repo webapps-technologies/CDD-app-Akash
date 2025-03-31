@@ -71,6 +71,7 @@ export class WhyChoseUsService {
           const obj = Object.assign(result,{
             image:process.env.PORT + image,
             imagePath:image,
+            
           });
           return this.whychooseusrepo.save(obj);
         }

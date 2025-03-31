@@ -26,7 +26,7 @@ import { WhyChoseUsModule } from './why-chose-us/why-chose-us.module';
       password: process.env.DB_PASS || '',
       database: process.env.DB_NAME ,
       entities:  [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize:true,
       
     }),
     

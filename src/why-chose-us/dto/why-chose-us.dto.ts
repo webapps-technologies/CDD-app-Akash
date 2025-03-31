@@ -27,8 +27,6 @@ export class WhyChoseUsDto {
   @IsNotEmpty()
   @IsString()
   youtubeUrl: string;
-
-
 }
 
 
