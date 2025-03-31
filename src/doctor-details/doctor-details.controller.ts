@@ -73,10 +73,8 @@ async getDoctorById(
       }),
     }),
   )
-
   async profileImage(
     @CurrentUser() user: Account,
-    
     @UploadedFile(
       new ParseFilePipe({
         validators: [

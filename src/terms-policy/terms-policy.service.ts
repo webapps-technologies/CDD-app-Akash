@@ -59,7 +59,7 @@ async findAll(dto: DefaultStatusPaginationDto) {
           async update(id: string, dto: TermsPolicyDto) {
             const result = await this.termsPolicyRepository.findOne({ where: { id } });
             if (!result) {
-              throw new NotFoundException('Language not found!');
+              throw new NotFoundException('Terms & Condition  not found!');
             }
             const obj = Object.assign(result, dto);
             return this.termsPolicyRepository.save(obj);
@@ -68,7 +68,7 @@ async findAll(dto: DefaultStatusPaginationDto) {
           async status(id: string, dto: DefaultStatus) {
             const result = await this.termsPolicyRepository.findOne({ where: { id } });
             if (!result) {
-              throw new NotFoundException('Language not found!');
+              throw new NotFoundException('Terms & Condition  not found!');
             }
             const obj = Object.assign(result, dto);
             return this.termsPolicyRepository.save(obj);

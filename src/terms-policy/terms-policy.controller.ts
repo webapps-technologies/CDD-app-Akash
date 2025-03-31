@@ -21,26 +21,26 @@ export class TermsPolicyController {
         @Get('all')
         @UseGuards(AuthGuard('jwt'), RolesGuard,)
         @Roles(UserRole.ADMIN, )
-        findAll(@Query() dto: DefaultStatusPaginationDto) {
+        findAllTermsPolicy(@Query() dto: DefaultStatusPaginationDto) {
           return this.termsPolicyService.findAll(dto);
         }
       
       @Get()
-        find(@Query() dto: PaginationDto) {
+        findTermsPolicy(@Query() dto: PaginationDto) {
           return this.termsPolicyService.find(dto);
         }
       
         @Patch(':id')
         @UseGuards(AuthGuard('jwt'), RolesGuard, )
         @Roles(UserRole.ADMIN, )
-        update(@Param('id') id: string, @Body() dto:TermsPolicyDto) {
+        updateTermsPolicy(@Param('id') id: string, @Body() dto:TermsPolicyDto) {
           return this.termsPolicyService.update(id, dto);
         }
       
         @Put(':id')
         @UseGuards(AuthGuard('jwt'), RolesGuard, )
         @Roles(UserRole.ADMIN, )
-        status(@Param('id') id: string, @Body() dto: DefaultStatus) {
+        updateStatus(@Param('id') id: string, @Body() dto: DefaultStatus) {
           return this.termsPolicyService.status(id, dto);
         }
       }

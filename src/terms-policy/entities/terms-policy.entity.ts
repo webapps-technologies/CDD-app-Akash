@@ -13,8 +13,8 @@ export class TermsPolicy {
   privacy_policy: string;
 
 
-    @Column({ type: 'enum', enum: DefaultStatus, default: DefaultStatus.PENDING })
-    status: DefaultStatus;
+  @Column({ type: 'enum', enum: DefaultStatus, default: DefaultStatus.PENDING })
+  status: DefaultStatus;
 
   @CreateDateColumn()
   createdAt: Date;
