@@ -1,26 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete ,Put} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete ,Put, Query, UseGuards} from '@nestjs/common';
 import { TermsPolicyService } from './terms-policy.service';
 import { TermsPolicy } from 'src/terms-policy/entities/terms-policy.entity';
-import { UpdateTermsPolicyDto } from './dto/update-terms-policy.dto';
-import { CreateTermsPolicyDto } from './dto/create-terms-policy.dto';
-import { CommonPaginationDto } from 'src/common/dto/common-pagination.dto';
+
+import { AuthGuard } from '@nestjs/passport';
+import { PaginationDto, TermsPolicyDto } from './dto/terms-policy.dto';
+import { RolesGuard } from 'src/auth/guards/roles.gurad';
+import { DefaultStatus, UserRole } from 'src/enum';
+import { Roles } from 'src/auth/decorator/roles.decorator';
+import { DefaultStatusPaginationDto } from 'src/common/dto/default-status-pagination.dto';
 
 
 @Controller('terms-policy')
 export class TermsPolicyController {
   constructor(private readonly termsPolicyService: TermsPolicyService) {}
   @Post()
-  async createTermsPolicy(@Body() dto: CreateTermsPolicyDto) {
-    return this.termsPolicyService.createTermsPolicy(dto);
-  }
+     create(@Body() dto:TermsPolicyDto) {
+        return this.termsPolicyService.create(dto);
+      }
 
-  @Get()
-  async getTermsPolicy(Dto:CommonPaginationDto) {
-    return this.termsPolicyService.getTermsPolicy(Dto);
-  }
-
-  @Put()
-  async updateTermsPolicy(@Body() dto: UpdateTermsPolicyDto) {
-    return this.termsPolicyService.updateTermsPolicy(dto);
-  }
-}
+        @Get('all')
+        @UseGuards(AuthGuard('jwt'), RolesGuard,)
+        @Roles(UserRole.ADMIN, )
+        findAll(@Query() dto: DefaultStatusPaginationDto) {
+          return this.termsPolicyService.findAll(dto);
+        }
+      
+      @Get()
+        find(@Query() dto: PaginationDto) {
+          return this.termsPolicyService.find(dto);
+        }
+      
+        @Patch(':id')
+        @UseGuards(AuthGuard('jwt'), RolesGuard, )
+        @Roles(UserRole.ADMIN, )
+        update(@Param('id') id: string, @Body() dto:TermsPolicyDto) {
+          return this.termsPolicyService.update(id, dto);
+        }
+      
+        @Put(':id')
+        @UseGuards(AuthGuard('jwt'), RolesGuard, )
+        @Roles(UserRole.ADMIN, )
+        status(@Param('id') id: string, @Body() dto: DefaultStatus) {
+          return this.termsPolicyService.status(id, dto);
+        }
+      }

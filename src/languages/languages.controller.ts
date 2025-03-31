@@ -21,8 +21,8 @@ export class LanguagesController {
 
 
     @Get('all')
-  // @UseGuards(AuthGuard('jwt'), RolesGuard,)
-  // @Roles(UserRole.ADMIN, )
+  @UseGuards(AuthGuard('jwt'), RolesGuard,)
+  @Roles(UserRole.ADMIN, )
   findAll(@Query() dto: DefaultStatusPaginationDto) {
     return this.languagesService.findAll(dto);
   }
