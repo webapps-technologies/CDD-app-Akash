@@ -10,4 +10,8 @@ export enum UserRole {
     SUSPENDED = 'SUSPENDED',
     PENDING = 'PENDING',
   }
-  
+  export enum PageType {
+    TNC = 'TERMS & CONDITIONS',
+    PRIVACY_POLICY = 'PRIVACY POLICY',
+    DATA_POLICY = 'DATA POLICY',
+  }

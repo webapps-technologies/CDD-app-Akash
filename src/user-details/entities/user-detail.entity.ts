@@ -15,8 +15,7 @@ export class UserDetail {
     @Column()
     email: string;
 
-  @Column({ type: 'enum', enum:UserRole,  })  
-   roles: UserRole;
+ 
 
    @Column({ type: 'uuid', nullable: true })
    accountId: string;

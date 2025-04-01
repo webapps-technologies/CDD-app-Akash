@@ -4,7 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-
 import { DefaultStatus } from 'src/enum';
 import { PrivacyPolicy } from './entities/privacy-policy.entity';
 import { PaginationDto, privacypolicyDto } from './dto/privacy-policy.dto';

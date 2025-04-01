@@ -95,11 +95,11 @@ export class DoctorDetailsService {
   }
 
   async findCompany(id: string) {
-    const result = await this.DoctorRepo.createQueryBuilder('DoctorDetail')
+    const result = await this.DoctorRepo.createQueryBuilder('doctordeatail') 
       .where('doctorDetail.accountId = :accountId', { accountId: id })
       .getOne();
     if (!result) {
-      throw new NotFoundException('Company not found!');
+      throw new NotFoundException('doctor details  not found!');
     }
     return result;
   }

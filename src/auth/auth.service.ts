@@ -48,7 +48,6 @@ export class AuthService {
       const UserDetail = this.userrepo.create({
         name: Dto.name, 
         email: Dto.email,
-        roles: Dto.roles,
         accountId: savedAccount.id,  
     });
     await this.userrepo.save(UserDetail);

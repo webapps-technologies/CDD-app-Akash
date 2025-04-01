@@ -12,6 +12,9 @@ import { TermsPolicyModule } from './terms-policy/terms-policy.module';
 import { PrivacyPolicyModule } from './privacy-policy/privacy-policy.module';
 import { DataModule } from './privacy/data/data.module';
 import { WhyChoseUsModule } from './why-chose-us/why-chose-us.module';
+import { NewsUpdatesModule } from './news-updates/news-updates.module';
+import { PagesModule } from './pages/pages.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -26,11 +29,14 @@ import { WhyChoseUsModule } from './why-chose-us/why-chose-us.module';
       password: process.env.DB_PASS || '',
       database: process.env.DB_NAME ,
       entities:  [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize:true,
+      synchronize:false,
       
     }),
+    CacheModule.register({
+      isGlobal: true,
+    }),
     
-    AccountModule, UserDetailsModule, AuthModule, DoctorDetailsModule, LanguagesModule, TermsPolicyModule, PrivacyPolicyModule, DataModule, WhyChoseUsModule],
+    AccountModule, UserDetailsModule, AuthModule, DoctorDetailsModule, LanguagesModule, TermsPolicyModule, PrivacyPolicyModule, DataModule, WhyChoseUsModule, NewsUpdatesModule, PagesModule],
   controllers: [AppController],
   providers: [AppService],
 })

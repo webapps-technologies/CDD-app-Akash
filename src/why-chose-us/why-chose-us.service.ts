@@ -15,7 +15,6 @@ export class WhyChoseUsService {
   @InjectRepository (WhyChoseUs) private readonly whychooseusrepo:Repository<WhyChoseUs>,
  ){}
 
-
   async create(dto:WhyChoseUsDto) {
            const result = await this.whychooseusrepo.findOne({
              where: { title: dto.title,
@@ -36,7 +35,7 @@ export class WhyChoseUsService {
       
           if (keyword) {
               queryBuilder.andWhere(
-                  '(blog.title LIKE :keyword OR blog.description LIKE :keyword)', 
+                  '(whyChoose Us.title LIKE :keyword OR why Choose Us.content LIKE :keyword)', 
                   { keyword: `%${keyword}%` }
               );
           }
