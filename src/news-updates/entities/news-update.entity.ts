@@ -2,11 +2,12 @@ import { DefaultStatus } from 'src/enum';
 import {
   Column,
   CreateDateColumn,
+  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export class News_Update {
+@Entity()
+export class NewsUpdate {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -14,7 +15,7 @@ export class News_Update {
   title: string;
 
   @Column({ type: 'text', nullable: false })
-  content: string;
+  desc: string;
 
   @Column({ type: 'text', nullable: false })
   youtubeUrl: string;

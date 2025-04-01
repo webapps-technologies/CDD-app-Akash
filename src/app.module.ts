@@ -8,9 +8,6 @@ import { DoctorDetailsModule } from './doctor-details/doctor-details.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LanguagesModule } from './languages/languages.module';
-import { TermsPolicyModule } from './terms-policy/terms-policy.module';
-import { PrivacyPolicyModule } from './privacy-policy/privacy-policy.module';
-import { DataModule } from './privacy/data/data.module';
 import { WhyChoseUsModule } from './why-chose-us/why-chose-us.module';
 import { NewsUpdatesModule } from './news-updates/news-updates.module';
 import { PagesModule } from './pages/pages.module';
@@ -20,25 +17,32 @@ import { CacheModule } from '@nestjs/cache-manager';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-    }), 
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST || 'localhost',
       port: Number(process.env.DB_PORT) || 3306,
       username: process.env.DB_USER || 'root',
       password: process.env.DB_PASS || '',
-      database: process.env.DB_NAME ,
-      entities:  [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize:true,
-      
+      database: process.env.DB_NAME,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize:false,
     }),
     CacheModule.register({
-      store: 'memory', 
+      store: 'memory',
       ttl: 0,
-      isGlobal: true,
+      isGlobal:true,
     }),
-    
-    AccountModule, UserDetailsModule, AuthModule, DoctorDetailsModule, LanguagesModule, TermsPolicyModule, PrivacyPolicyModule, DataModule, WhyChoseUsModule, NewsUpdatesModule, PagesModule],
+
+    AccountModule,
+    UserDetailsModule,
+    AuthModule,
+    DoctorDetailsModule,
+    LanguagesModule,
+    WhyChoseUsModule,
+    NewsUpdatesModule,
+    PagesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

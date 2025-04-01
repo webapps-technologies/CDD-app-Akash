@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { PageDto } from './dto/page.dto';
@@ -11,6 +11,11 @@ import { Roles } from 'src/auth/decorator/roles.decorator';
 @Controller('pages')
 export class PagesController {
   constructor(private readonly pagesService: PagesService) {}
+  
+  @Post()
+    create(@Body() dto: PageDto) {
+      return this.pagesService.create(dto);
+    }
 
   @Get()
   @UseGuards(AuthGuard('jwt'), RolesGuard,)

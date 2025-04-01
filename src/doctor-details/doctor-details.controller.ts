@@ -95,7 +95,7 @@ export class DoctorDetailsController {
     )
     file: Express.Multer.File,
   ) {
-    const fileData = await this.doctorDetailsService.findCompany(user.id);
+    const fileData = await this.doctorDetailsService.findDoctor(user.id);
     return this.doctorDetailsService.profileImage(file.path, fileData);
   }
 }

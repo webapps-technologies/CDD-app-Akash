@@ -94,7 +94,7 @@ export class DoctorDetailsService {
     return this.DoctorRepo.save(obj);
   }
 
-  async findCompany(id: string) {
+  async findDoctor(id: string) {
     const result = await this.DoctorRepo.createQueryBuilder('doctordeatail') 
       .where('doctorDetail.accountId = :accountId', { accountId: id })
       .getOne();

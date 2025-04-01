@@ -1,4 +1,10 @@
-import { Injectable,ConflictException,UnauthorizedException, Inject, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+  Inject,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -18,17 +24,17 @@ import APIFeatures from 'src/utils/apiFeatures.utils';
 
 export class AuthService {
   smsService: any;
-  
+
   constructor(
     private jwtService: JwtService,
     @InjectRepository(Account) private readonly repo: Repository<Account>,
-    @InjectRepository(DoctorDetail) private readonly doctorrepo:Repository<DoctorDetail>,
-    @InjectRepository(UserDetail) private readonly userrepo:Repository<UserDetail>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache
+    @InjectRepository(DoctorDetail)
+    private readonly doctorrepo: Repository<DoctorDetail>,
+    @InjectRepository(UserDetail)
+    private readonly userrepo: Repository<UserDetail>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
-
-  ){}
- 
   async verifyOtp(dto: OtpDto) {
     const user = await this.getUserDetails(dto.phoneNumber, UserRole.USER);
     if (!user) {
@@ -55,9 +61,9 @@ export class AuthService {
         'Phone Number already exists with another account!',
       );
     }
-    const otp = 783200;
-    // const otp = Math.floor(1000 + Math.random() * 9000);
-    // sendOtp(+dto.phoneNumber, otp);
+
+    const otp = Math.floor(1000 + Math.random() * 9000);
+
     this.cacheManager.set(dto.phoneNumber, otp, 10 * 60 * 1000);
 
     return {
@@ -66,27 +72,23 @@ export class AuthService {
       message: 'OTP sent succesfully',
     };
   }
+  async signIn(loginId: string, password: string) {
+    const admin = await this.getUserDetails(loginId, UserRole.ADMIN);
+    const comparePassword = await bcrypt.compare(password, admin.password);
+    if (!comparePassword) {
+      throw new UnauthorizedException('Invalid Credentials');
+    }
+    const token = await APIFeatures.assignJwtToken(admin.id, this.jwtService);
+    return { token };
+  }
 
-
-  // async signIn(loginId: string, password: string) {
-  //   const admin = await this.getUserDetails(loginId, UserRole.ADMIN);
-  //   const comparePassword = await bcrypt.compare(password, admin.password);
-  //   if (!comparePassword) {
-  //     throw new UnauthorizedException('Invalid Credentials');
-  //   }
-  //   const token = await APIFeatures.assignJwtToken(admin.id, this.jwtService);
-  //   return { token };
-  // }
- 
   private getUserDetails = async (
     id: string,
     role?: UserRole,
   ): Promise<any> => {
-    // let result = await this.cacheManager.get('userDetail' + id);
-    // if (!result) {
     const query = this.repo
       .createQueryBuilder('account')
-      .leftJoinAndSelect('account.octorDetail', 'octorDetail')
+      .leftJoinAndSelect('account.doctorDetail', 'doctorDetail')
       .leftJoinAndSelect('account.userDetail', 'userDetail')
       .select([
         'account.id',
@@ -94,23 +96,22 @@ export class AuthService {
         'account.roles',
         'account.status',
         'account.createdBy',
-        'companyDetail.id',
-        'companyDetail.name',
-        'companyDetail.status',
+        'doctorDetail.id',
+        'doctorDetail.name',
         'userDetail.id',
         'userDetail.name',
       ]);
     if (!role && role == UserRole.USER) {
       query.where('account.roles = :roles', { roles: UserRole.USER });
     }
-    if (!role && role == UserRole.VENDOR) {
+    if (!role && role == UserRole.DOCTOR) {
       query.where('account.roles IN (:...roles)', {
-        roles: [UserRole.VENDOR, UserRole.STAFF],
+        roles: [UserRole.DOCTOR],
       });
     }
     if (!role && role == UserRole.ADMIN) {
       query.where('account.roles IN (:...roles)', {
-        roles: [UserRole.ADMIN, UserRole.EMPLOYEE],
+        roles: [UserRole.ADMIN],
       });
     }
     const result = await query
@@ -119,51 +120,12 @@ export class AuthService {
         phoneNumber: id,
       })
       .getOne();
-    // this.cacheManager.set('userDetail' + id, result, 7 * 24 * 60 * 60 * 1000);
-    // }
     if (!result) {
       throw new UnauthorizedException('Account not found!');
     }
     return result;
   };
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // async register(Dto: RegisterDto): Promise<Account> {
 //   const existingUser = await this.repo.findOne({ where: { email: Dto.email } });
@@ -175,22 +137,22 @@ export class AuthService {
 //       name: Dto.name,
 //       email: Dto.email,
 //       password: hashedPassword,
-//       roles: Dto.roles ,  
+//       roles: Dto.roles ,
 //   });
 //   const savedAccount = await this.repo.save(payload);
 //   if(Dto.roles=== UserRole.DOCTOR){
 //     const doctorDetail = this.doctorrepo.create({
-//         name: Dto.name, 
+//         name: Dto.name,
 //         email: Dto.email,
 //         roles: Dto.roles,
-//         accountId: savedAccount.id,  
+//         accountId: savedAccount.id,
 //     });
 //     await this.doctorrepo.save(doctorDetail);
 //   } else if(Dto.roles=== UserRole.USER){
 //     const UserDetail = this.userrepo.create({
-//       name: Dto.name, 
+//       name: Dto.name,
 //       email: Dto.email,
-//       accountId: savedAccount.id,  
+//       accountId: savedAccount.id,
 //   });
 //   await this.userrepo.save(UserDetail);
 //   }
@@ -212,9 +174,3 @@ export class AuthService {
 // const accessToken = await this.jwtService.sign(payload);
 // return { accessToken };
 // }
-
-
-
-
-
-

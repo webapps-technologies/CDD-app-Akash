@@ -21,14 +21,13 @@ export class AuthController {
     return this.authService.sentOtp(dto);
   }
 
-  // @Post('verify')
-  // verifyOtp(@Body() dto: OtpDto, @Req() req, @Ip() ip) {    
-  //   return this.authService.verifyOtp(
-  //     dto.loginId,
-  //     dto.otp,
-  //     req.headers.origin,
-  //     ip,
-  //   );
+  @Post('admin/login')
+  signin(@Body() dto: AdminSigninDto) {
+    return this.authService.signIn(dto.loginId, dto.password);
+  }
+
+ 
+
   }
 
 

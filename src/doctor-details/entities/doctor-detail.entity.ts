@@ -12,9 +12,6 @@ export class DoctorDetail {
   @Column()
   email: string;
 
-  @Column({ type: 'enum', enum: UserRole })
-  roles: UserRole;
-
   @Column({ type: 'date' })
   dob: string;
 

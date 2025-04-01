@@ -1,5 +1,5 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cache } from 'cache-manager';
 import { Repository } from 'typeorm';
@@ -12,6 +12,18 @@ export class PagesService {
     @InjectRepository(Page) private readonly repo: Repository<Page>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
+
+   async create(dto: PageDto) {
+      const result = await this.repo.findOne({
+        where: { desc: dto.desc},
+      });
+      if (result) {
+        throw new ConflictException('desc already exists!');
+      }
+      const obj = Object.assign(dto);
+      return this.repo.save(obj);
+    }
+  
 
   findAll() {
     return this.repo.find();

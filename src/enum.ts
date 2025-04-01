@@ -15,3 +15,8 @@ export enum UserRole {
     PRIVACY_POLICY = 'PRIVACY POLICY',
     DATA_POLICY = 'DATA POLICY',
   }
+  export enum  UserGender{
+    MALE = 'MALE',
+    FEMALE="FEMALE",
+    OTHER="OTHER"
+  }
