@@ -54,6 +54,7 @@ export class DoctorDetailsController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles(UserRole.ADMIN)
   async getDoctorById(@Param('id') doctorId: string) {
     return this.doctorDetailsService.getdoctorById(doctorId);

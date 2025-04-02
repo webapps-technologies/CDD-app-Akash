@@ -1,4 +1,11 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { UserDetail } from 'src/user-details/entities/user-detail.entity';
 import { DoctorDetail } from 'src/doctor-details/entities/doctor-detail.entity';
 @Entity()
@@ -24,7 +31,7 @@ export class CaseHistory {
 
   @ManyToOne(() => DoctorDetail, (doctorDetail) => doctorDetail.caseHistory)
   doctorDetail: DoctorDetail;
-  
+
   @ManyToOne(() => UserDetail, (userDetail) => userDetail.caseHistory)
   userDetail: UserDetail;
 
@@ -35,10 +42,8 @@ export class CaseHistory {
   prescription: string;
 
   @CreateDateColumn()
-   createdAt: Date;
- 
-   @UpdateDateColumn()
-   updatedAt: Date;
+  createdAt: Date;
 
-
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
