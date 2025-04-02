@@ -16,7 +16,7 @@ export class WebLoginDto {
 
 export class OtpDto {
   @IsNotEmpty()
-  phoneNumber : string;
+  PhoneNumber : string;
 
   @IsNotEmpty()
   otp: string;
