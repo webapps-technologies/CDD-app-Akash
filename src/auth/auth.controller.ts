@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Ip } from '@nes
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { RegisterDto } from './dto/register.dto';
+import {  RegisterDto, } from './dto/register.dto';
 import { AdminSigninDto, OtpDto, SigninDto,  } from './dto/login.dto';
 
 @Controller('auth')
@@ -21,12 +21,18 @@ export class AuthController {
     return this.authService.sentOtp(dto);
   }
 
-  @Post('admin/login')
-  signin(@Body() dto: AdminSigninDto) {
-    return this.authService.signIn(dto.loginId, dto.password);
-  }
+  // @Post('admin/login')
+  // signin(@Body() dto: AdminSigninDto) {
+  //   return this.authService.signIn(dto.loginId, dto.password);
+  // }
 
  
+  @Post('register')
+  async register(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto);
+  }
+
+
 
   }
 
@@ -60,10 +66,6 @@ export class AuthController {
 
 
 
-//   @Post('register')
-//   async register(@Body() registerDto: RegisterDto) {
-//     return this.authService.register(registerDto);
-//   }
 
 // @Post('login')
 // async login (@Body() Dto:LoginDto){

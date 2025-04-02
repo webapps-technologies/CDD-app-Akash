@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { UserDetail } from 'src/user-details/entities/user-detail.entity';
 import { CaseHistory } from './entities/case-history.entity';
 import { UserGender } from 'src/enum';
+import { CommonPaginationDto } from 'src/common/dto/common-pagination.dto';
 
 @Injectable()
 export class CaseHistoryService {
@@ -44,13 +45,22 @@ export class CaseHistoryService {
     return await this.casehistoryrepo.save(caseHistory);
   }
 
+  async findAll(dto: CommonPaginationDto) {
+    const queryBuilder = this.casehistoryrepo.createQueryBuilder('caseHistory');
+    queryBuilder.take(dto.limit).skip(dto.offset);
+
+    const [result, count] = await queryBuilder.getManyAndCount();
+
+    return { result, count };
+  }
+
   async getCaseHistoriesByDoctor(doctorId: string) {
     const result = await this.casehistoryrepo
       .createQueryBuilder('caseHistory')
       .where('caseHistory.doctorId = :doctorId', { doctorId })
       .getMany();
     if (!result) {
-      throw new NotFoundException('User not found!');
+      throw new NotFoundException('  case history not found!');
     }
     return result;
   }

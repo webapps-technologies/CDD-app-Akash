@@ -31,7 +31,7 @@ export class WhyChoseUsService {
          async findAll(dto: CommonPaginationDto) {
           const keyword = dto.keyword || '';
       
-          const queryBuilder = this.whychooseusrepo.createQueryBuilder('blog');
+          const queryBuilder = this.whychooseusrepo.createQueryBuilder('why Choose us');
       
           if (keyword) {
               queryBuilder.andWhere(

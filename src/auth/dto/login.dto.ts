@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
 
 export class MobLoginDto {
   @IsNotEmpty()
@@ -19,9 +19,7 @@ export class OtpDto {
   phoneNumber : string;
 
   @IsNotEmpty()
-  @Type(() => Number)
-  @IsNumber()
-  otp: number;
+  otp: string;
 }
 
 export class SigninDto {
@@ -64,4 +62,12 @@ export class CreateDetailDto {
 
   @IsOptional()
   accountId: string;
+}
+export class LoginDto {
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @MinLength(6) 
+  password: string;
 }
