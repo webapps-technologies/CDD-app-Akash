@@ -12,6 +12,7 @@ import { WhyChoseUsModule } from './why-chose-us/why-chose-us.module';
 import { NewsUpdatesModule } from './news-updates/news-updates.module';
 import { PagesModule } from './pages/pages.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { CaseHistoryModule } from './case-history/case-history.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { CacheModule } from '@nestjs/cache-manager';
       password: process.env.DB_PASS || '',
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize:false,
+      synchronize:true,
     }),
     CacheModule.register({
       store: 'memory',
@@ -42,6 +43,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     WhyChoseUsModule,
     NewsUpdatesModule,
     PagesModule,
+    CaseHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

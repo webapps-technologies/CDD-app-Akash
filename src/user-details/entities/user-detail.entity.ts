@@ -4,10 +4,12 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { UserGender, UserRole } from 'src/enum';
 
 import { Account } from 'src/account/entities/account.entity';
+import { CaseHistory } from 'src/case-history/entities/case-history.entity';
 
 @Entity()
 export class UserDetail {
@@ -37,4 +39,7 @@ export class UserDetail {
 
   @ManyToOne(() => Account, (account) => account.userDetail)
   account: Account;
+  @OneToMany(() => CaseHistory, (caseHistory) => caseHistory.userDetail)
+    caseHistory: CaseHistory[];
+  UserGender: string | undefined;
 }

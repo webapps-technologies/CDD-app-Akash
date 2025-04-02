@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from 'src/enum';
 import { Account } from 'src/account/entities/account.entity';
+import { CaseHistory } from 'src/case-history/entities/case-history.entity';
 @Entity()
 export class DoctorDetail {
   @PrimaryGeneratedColumn('uuid')
@@ -44,4 +45,8 @@ export class DoctorDetail {
 
   @ManyToOne(() => Account, (account) => account.doctorDetail)
   account: Account;
+
+  @OneToMany(() => CaseHistory, (caseHistory) => caseHistory.doctorDetail)
+  caseHistory: CaseHistory[];
+  
 }
