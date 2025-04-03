@@ -7,9 +7,11 @@ export class UpdateuserProfileDto {
 
   @IsOptional()
   @IsInt()
-  @Min(1)
-  @Max(10)
   age?: number;  
+
+  @IsOptional()
+  @IsString()
+  address?: string; 
 
    
 }

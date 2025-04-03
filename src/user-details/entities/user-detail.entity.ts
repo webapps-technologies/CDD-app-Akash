@@ -32,13 +32,14 @@ export class UserDetail {
   gender: UserGender;
 
   @Column({ nullable: true })
-  contact : string;
+  address : string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @ManyToOne(() => Account, (account) => account.userDetail)
   account: Account;
+
   @OneToMany(() => CaseHistory, (caseHistory) => caseHistory.userDetail)
     caseHistory: CaseHistory[];
   UserGender: string | undefined;

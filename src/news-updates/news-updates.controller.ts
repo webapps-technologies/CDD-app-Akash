@@ -56,7 +56,6 @@ export class NewsUpdatesController {
     }),
   )
 
-
   async image(
     @Param('id') id:string,
     @UploadedFile(
@@ -74,4 +73,6 @@ export class NewsUpdatesController {
   return this.newsUpdatesService.image(file.path,fileData);
 
   }
+
+  
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, Put } from '@nestjs/common';
 import { UserDetailsService } from './user-details.service';
 import { CreateUserDetailDto } from './dto/create-user-detail.dto';
 import { PaginationDto, UpdateUserDetailDto } from './dto/update-user-detail.dto';
@@ -8,6 +8,7 @@ import { Roles } from 'src/auth/decorator/roles.decorator';
 import { UserRole } from 'src/enum';
 import { Account } from 'src/account/entities/account.entity';
 import { CurrentUser } from 'src/auth/decorator/current-user.decorator';
+import { UpdateuserProfileDto } from './dto/update-userProfile.dto';
 
 @Controller('user-details')
 export class UserDetailsController {
@@ -35,7 +36,7 @@ export class UserDetailsController {
     @Patch()
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles(UserRole.USER)
-    update(@CurrentUser() user: Account, @Body() dto:UpdateUserDetailDto) {
+    update(@CurrentUser() user: Account, @Body() dto:UpdateuserProfileDto) {
       return this.userDetailsService.update(user.id, dto);
     }
   

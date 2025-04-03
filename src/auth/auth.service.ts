@@ -13,7 +13,7 @@ import { Repository } from 'typeorm';
 import { DoctorDetail } from 'src/doctor-details/entities/doctor-detail.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { UserRole } from 'src/enum';
+import { DefaultStatus, UserRole } from 'src/enum';
 import { UserDetail } from 'src/user-details/entities/user-detail.entity';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
@@ -91,22 +91,20 @@ export class AuthService {
       throw new ConflictException('User with this ph number exists');
     }
     const payload = this.repo.create({
-      name: Dto.name,
       PhoneNumber: Dto.PhoneNumber,
       email: Dto.email,
       roles: Dto.roles,
+      status: DefaultStatus.ACTIVE,
     });
     const savedAccount = await this.repo.save(payload);
     if (Dto.roles === UserRole.DOCTOR) {
       const doctorDetail = this.doctorrepo.create({
-        name: Dto.name,
         email: Dto.email,
         accountId: savedAccount.id,
       });
       await this.doctorrepo.save(doctorDetail);
     } else if (Dto.roles === UserRole.USER) {
       const UserDetail = this.userrepo.create({
-        name: Dto.name,
         email: Dto.email,
         accountId: savedAccount.id,
       });

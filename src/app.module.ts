@@ -27,7 +27,7 @@ import { CaseHistoryModule } from './case-history/case-history.module';
       password: process.env.DB_PASS || '',
       database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize:false,
+      synchronize:true,
     }),
     CacheModule.register({
 

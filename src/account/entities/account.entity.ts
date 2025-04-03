@@ -6,16 +6,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserRole } from 'src/enum';
+import { DefaultStatus, UserRole } from 'src/enum';
 import { DoctorDetail } from 'src/doctor-details/entities/doctor-detail.entity';
 import { UserDetail } from 'src/user-details/entities/user-detail.entity';
 @Entity()
 export class Account {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column({ type: 'varchar', length: 55 })
-  name: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   PhoneNumber: string;
@@ -28,6 +25,9 @@ export class Account {
 
   @Column({ type: 'enum', enum: UserRole })
   roles: UserRole;
+
+  @Column({ type: 'enum', enum: DefaultStatus, default: DefaultStatus.ACTIVE })
+  status: DefaultStatus;
 
   @OneToMany(() => DoctorDetail, (doctorDetail) => doctorDetail.account)
   doctorDetail: DoctorDetail[];

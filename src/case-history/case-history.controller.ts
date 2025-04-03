@@ -16,12 +16,16 @@ export class CaseHistoryController {
   doctorDetailsService: any;
   constructor(private readonly caseHistoryService: CaseHistoryService) {}
   @Post()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.ADMIN)
   async createCaseHistory(@Body() createCaseHistoryDto: CreateCaseHistoryDto) {
     return this.caseHistoryService.createCaseHistory(createCaseHistoryDto);
   }
  
 
   @Get()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.ADMIN)
     findAll(@Query()dto:CommonPaginationDto){
       return this.caseHistoryService.findAll(dto);
     }

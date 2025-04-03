@@ -10,10 +10,6 @@ import {
 import { UserRole } from 'src/enum';
 
 export class RegisterDto {
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
   @IsNotEmpty()
   @MinLength(10)
   @MaxLength(10)
