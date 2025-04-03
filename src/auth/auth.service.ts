@@ -22,8 +22,6 @@ import APIFeatures from 'src/utils/apiFeatures.utils';
 import { RegisterDto } from './dto/register.dto';
 
 export class AuthService {
-  smsService: any;
-
   constructor(
     private jwtService: JwtService,
     @InjectRepository(Account) private readonly repo: Repository<Account>,
@@ -36,17 +34,14 @@ export class AuthService {
 
   async verifyOtp(dto: OtpDto) {
     const user = await this.getUserByPhoneNumber(dto.PhoneNumber);
-    console.log('1', user);
     if (!user) {
       throw new NotFoundException('User not found with this Phone Number!');
     }
 
     const sentOtp = await this.cacheManager.get(dto.PhoneNumber);
-    console.log('2', sentOtp);
     if (!sentOtp) {
       throw new UnauthorizedException('OTP expired or not found!');
     }
-    console.log('dto.otp', dto.otp);
     if (dto.otp !== sentOtp) {
       throw new UnauthorizedException('Invalid OTP!');
     }
@@ -69,13 +64,11 @@ export class AuthService {
   private getUserByPhoneNumber = async (
     phoneNumber: string,
   ): Promise<Account | null> => {
-    console.log(' phone number', phoneNumber);
+   
     const result = await this.repo
       .createQueryBuilder('account')
       .where('account.PhoneNumber = :phoneNumber', { phoneNumber })
       .getOne();
-    console.log('Query result', result);
-
     if (!result) {
       console.log('Account not found!');
       throw new UnauthorizedException('Account not found!');
