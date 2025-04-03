@@ -5,13 +5,15 @@ import { Type } from 'class-transformer';
 
 export class UpdateDoctorDetailDto extends PartialType(CreateDoctorDetailDto) {}
 export class PaginationDto {
+  @IsOptional()
     @IsNotEmpty()
     @Type(() => Number)
     @IsNumber()
-    @Min(10)
-    @Max(50)
+    @Min(0)
+    @Max(10)
     limit: number;
-  
+
+  @IsOptional()
     @IsNotEmpty()
     @Type(() => Number)
     @IsNumber()

@@ -89,13 +89,13 @@ export class DoctorDetailsService {
   async profileImage(image: string, result: DoctorDetail) {
     const obj = Object.assign(result, {
       profileimage: process.env.PORT + image,
-      imagepath: image,
+      imagePath: image,
     });
     return this.DoctorRepo.save(obj);
   }
 
   async findDoctor(id: string) {
-    const result = await this.DoctorRepo.createQueryBuilder('doctordeatail') 
+    const result = await this.DoctorRepo.createQueryBuilder('doctorDetail') 
       .where('doctorDetail.accountId = :accountId', { accountId: id })
       .getOne();
     if (!result) {

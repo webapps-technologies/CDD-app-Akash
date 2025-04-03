@@ -23,8 +23,8 @@ export class Account {
   @Column({ type: 'varchar', length: 100, nullable: true })
   email: string;
 
-  @Column({ nullable: true })
-  password: string;
+ @Column({ nullable: true })
+  password: string; 
 
   @Column({ type: 'enum', enum: UserRole })
   roles: UserRole;

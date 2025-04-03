@@ -57,7 +57,7 @@ export class AuthService {
 
   async sentOtp(dto: SigninDto) {
     const otp = Math.floor(1000 + Math.random() * 9000);
-    this.cacheManager.set(dto.phoneNumber, otp, 10 * 60 * 1000);
+    this.cacheManager.set(dto.phoneNumber, otp, 600 * 1000);
     return {
       otp,
       phoneNumber: dto.phoneNumber,

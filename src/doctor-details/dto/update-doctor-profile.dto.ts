@@ -3,13 +3,32 @@ import { IsOptional, IsString, IsInt, Min, Max, IsDate, IsUrl } from 'class-vali
 export class UpdateDoctorProfileDto {
   @IsOptional()
   @IsString()
-  name?: string;  
+  name?: string;
+  
+
+  @IsString()
+  designation: string;
+
+  @IsString()
+  specialization: string;
+
+  @IsOptional()
+  @IsString()
+  collegeName?: String; 
 
   @IsOptional()
   @IsInt()
-  @Min(1)
-  @Max(10)
-  collegeYear?: number;  
+  studyYear?: number;
+
+  @IsOptional()
+  @IsString()
+  clinicName?: string;
+
+
+  @IsOptional()
+  @IsInt()
+  experienceYears?: number;
+
 
   @IsOptional()
   @IsUrl()
