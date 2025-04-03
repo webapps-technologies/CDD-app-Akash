@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { PageDto } from './dto/page.dto';
@@ -11,15 +19,15 @@ import { Roles } from 'src/auth/decorator/roles.decorator';
 @Controller('pages')
 export class PagesController {
   constructor(private readonly pagesService: PagesService) {}
-  
+
   @Post()
-    create(@Body() dto: PageDto) {
-      return this.pagesService.create(dto);
-    }
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.ADMIN)
+  create(@Body() dto: PageDto) {
+    return this.pagesService.create(dto);
+  }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'), RolesGuard,)
-  @Roles(UserRole.ADMIN)
   findAll() {
     return this.pagesService.findAll();
   }
@@ -30,7 +38,9 @@ export class PagesController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'), RolesGuard, )
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles(UserRole.ADMIN)
   update(@Param('id') id: string, @Body() updatePageDto: PageDto) {
     return this.pagesService.update(+id, updatePageDto);

@@ -27,13 +27,13 @@ export class NewsUpdatesController {
   }
 
   @Get(":id")
+  @UseGuards(AuthGuard('jwt'), RolesGuard, )
+  @Roles(UserRole.ADMIN, )
   findOne(@Param(':id') id: string){
     return this.newsUpdatesService.findOne(id);
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'), RolesGuard, )
-    @Roles(UserRole.ADMIN, )
   update(@Param('id') id:string, @Body() dot:NewsUpdateDto){
     return this.newsUpdatesService.update(id,dot);
   }
@@ -55,6 +55,8 @@ export class NewsUpdatesController {
       }),
     }),
   )
+
+
   async image(
     @Param('id') id:string,
     @UploadedFile(

@@ -24,6 +24,7 @@ export class NewsUpdateDto {
   content: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   youtubeUrl: string;

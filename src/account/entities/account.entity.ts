@@ -26,18 +26,15 @@ export class Account {
   @Column({ nullable: true })
   password: string;
 
-  @Column({ type: 'uuid', nullable: true })
-  createdBy: string;
-
   @Column({ type: 'enum', enum: UserRole })
   roles: UserRole;
+
   @OneToMany(() => DoctorDetail, (doctorDetail) => doctorDetail.account)
   doctorDetail: DoctorDetail[];
 
   @OneToMany(() => UserDetail, (userDetail) => userDetail.account)
   userDetail:UserDetail[];
   
-
-  @Column({ nullable: true })
-  CreateDateColumn: string;
+ @CreateDateColumn()
+  createdAt: Date;
 }
