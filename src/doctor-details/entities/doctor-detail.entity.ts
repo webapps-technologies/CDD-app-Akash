@@ -7,10 +7,10 @@ export class DoctorDetail {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column(({ type: 'varchar', length: 55, nullable: true }))
   name: string;
 
-  @Column()
+  @Column(({ type: 'varchar', length: 55, nullable: true }))
   email: string;
 
   @Column({ type: 'date' })
@@ -23,10 +23,10 @@ export class DoctorDetail {
   designation: string;
 
   @Column({ nullable: true })
-  specialization?: string;
+  specialization: string;
 
   @Column({ nullable: true })
-  collegeName?: string;
+  collegeName: string;
 
   @Column({ nullable: true })
   studyYear?: string;

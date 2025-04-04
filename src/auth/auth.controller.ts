@@ -21,11 +21,6 @@ export class AuthController {
     return this.authService.sentOtp(dto);
   }
 
-  // @Post('admin/login')
-  // signin(@Body() dto: AdminSigninDto) {
-  //   return this.authService.signIn(dto.loginId, dto.password);
-  // }
-
  
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {

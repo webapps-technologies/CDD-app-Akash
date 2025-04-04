@@ -3,7 +3,7 @@ import { IsOptional, IsString, IsInt, Min, Max, IsDate, IsUrl } from 'class-vali
 export class UpdateDoctorProfileDto {
   @IsOptional()
   @IsString()
-  name?: string;
+  name: string;
   
 
   @IsString()
@@ -14,27 +14,27 @@ export class UpdateDoctorProfileDto {
 
   @IsOptional()
   @IsString()
-  collegeName?: String; 
+  collegeName: String; 
 
   @IsOptional()
   @IsInt()
-  studyYear?: number;
+  studyYear: number;
 
   @IsOptional()
   @IsString()
-  clinicName?: string;
+  clinicName: string;
 
 
   @IsOptional()
   @IsInt()
-  experienceYears?: number;
+  experienceYears: number;
 
 
   @IsOptional()
   @IsUrl()
-  profilePhoto?: string;  
+  profilePhoto: string;  
 
   @IsOptional()
   @IsDate()
-  dob?: Date;  
+  dob: Date;  
 }

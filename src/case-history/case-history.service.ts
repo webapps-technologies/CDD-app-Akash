@@ -55,13 +55,13 @@ export class CaseHistoryService {
   }
 
   async getCaseHistoriesByDoctor(doctorId: string) {
-    const result = await this.casehistoryrepo
+    const [result,total] = await this.casehistoryrepo
       .createQueryBuilder('caseHistory')
       .where('caseHistory.doctorId = :doctorId', { doctorId })
-      .getMany();
+      .getManyAndCount();
     if (!result) {
       throw new NotFoundException('  case history not found!');
     }
-    return result;
+    return { result, total };
   }
 }

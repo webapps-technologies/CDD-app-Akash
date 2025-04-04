@@ -3,15 +3,15 @@ import { IsOptional, IsString, IsInt, Min, Max, IsDate, IsUrl } from 'class-vali
 export class UpdateuserProfileDto {
   @IsOptional()
   @IsString()
-  name?: string;  
+  name: string;  
 
   @IsOptional()
   @IsInt()
-  age?: number;  
+  age: number;  
 
   @IsOptional()
   @IsString()
-  address?: string; 
+  address: string; 
 
    
 }

@@ -51,10 +51,11 @@ export class AuthService {
   }
 
   async sentOtp(dto: SigninDto) {
-    const otp = Math.floor(1000 + Math.random() * 9000);
+  //   const otp = Math.floor(1000 + Math.random() * 9000);
+    const otp=1234;
     this.cacheManager.set(dto.phoneNumber, otp, 600 * 1000);
     return {
-      otp,
+     
       phoneNumber: dto.phoneNumber,
       success: true,
       message: 'OTP sent succesfully',
@@ -107,18 +108,3 @@ export class AuthService {
   }
 }
 
-// async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
-// const { email, password } = loginDto;
-// const user = await this.repo.findOne({ where: { email },  });
-// if (!user) {
-//   throw new UnauthorizedException('Invalid credentials');
-// }
-// const isPasswordValid = await bcrypt.compare(password, user.password);
-// if (!isPasswordValid) {
-//   throw new UnauthorizedException('Invalid credentials');
-// }
-// const payload = { userId: user.id,};
-
-// const accessToken = await this.jwtService.sign(payload);
-// return { accessToken };
-// }

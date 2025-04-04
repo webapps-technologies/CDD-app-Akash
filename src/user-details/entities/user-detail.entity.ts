@@ -16,10 +16,10 @@ export class UserDetail {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column(({ type: 'varchar', length: 55, nullable: true }))
   name: string;
 
-  @Column()
+  @Column(({ type: 'varchar', length: 55, nullable: true }))
   email: string;
 
   @Column({ type: 'uuid', nullable: true })
@@ -28,7 +28,7 @@ export class UserDetail {
   @Column()
   age: number;
 
-  @Column({ type: 'enum', enum: UserGender })
+  @Column({ type: 'enum', enum: UserGender }) 
   gender: UserGender;
 
   @Column({ nullable: true })
@@ -42,5 +42,5 @@ export class UserDetail {
 
   @OneToMany(() => CaseHistory, (caseHistory) => caseHistory.userDetail)
     caseHistory: CaseHistory[];
-  UserGender: string | undefined;
+  
 }

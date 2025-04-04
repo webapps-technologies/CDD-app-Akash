@@ -10,18 +10,25 @@ import {
   UpdateDoctorDetailDto,
 } from './dto/update-doctor-detail.dto';
 import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
+import { Account } from 'src/account/entities/account.entity';
+;
 
 @Injectable()
 export class DoctorDetailsService {
   constructor(
     @InjectRepository(DoctorDetail)
     private readonly DoctorRepo: Repository<DoctorDetail>,
+    @InjectRepository(Account)private readonly AccountRepo: Repository<Account>,
   ) {}
 
   async getProfile(id: string) {
-    const result = await this.DoctorRepo.createQueryBuilder('doctorDetail')
-      .leftJoinAndSelect('doctorDetail.account', 'account')
+    const result = await this.AccountRepo.createQueryBuilder('account')
+      .leftJoinAndSelect('account.doctorDetail', 'doctorDetail')
       .select([
+        'account.id',
+        'account.email',
+        'account.roles',
+        'account.status',
         'doctorDetail.id',
         'doctorDetail.name',
         'doctorDetail.email',
@@ -32,9 +39,7 @@ export class DoctorDetailsService {
         'doctorDetail.clinicName',
         'doctorDetail.experienceYears',
         'doctorDetail.accountId',
-        'account.id',
-        'account.email',
-        'account.roles',
+      
       ])
       .where('doctorDetail.accountId = :id', { id: id })
       .getOne();
@@ -88,7 +93,7 @@ export class DoctorDetailsService {
 
   async profileImage(image: string, result: DoctorDetail) {
     const obj = Object.assign(result, {
-      profileimage: process.env.PORT + image,
+      profileimage: process.env.PORT + image,// cahnges
       imagePath: image,
     });
     return this.DoctorRepo.save(obj);
