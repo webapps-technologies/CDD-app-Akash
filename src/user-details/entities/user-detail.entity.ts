@@ -25,13 +25,13 @@ export class UserDetail {
   @Column({ type: 'uuid', nullable: true })
   accountId: string;
 
-  @Column()
-  age: number;
+  @Column({type: 'varchar', length: 50, nullable: true })
+  age: string;
 
   @Column({ type: 'enum', enum: UserGender }) 
   gender: UserGender;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   address : string;
 
   @CreateDateColumn()
@@ -42,5 +42,6 @@ export class UserDetail {
 
   @OneToMany(() => CaseHistory, (caseHistory) => caseHistory.userDetail)
     caseHistory: CaseHistory[];
+
   
 }

@@ -7,25 +7,25 @@ export class DoctorDetail {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column(({ type: 'varchar', length: 55, nullable: true }))
+  @Column({ type: 'varchar', length: 55, nullable: true })
   name: string;
 
-  @Column(({ type: 'varchar', length: 55, nullable: true }))
+  @Column({ type: 'varchar', length: 55, nullable: true })
   email: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date',nullable: true  })
   dob: string;
 
   @Column({ type: 'uuid', nullable: true })
   accountId: string;
 
-  @Column({ nullable: true })
+  @Column({  type: 'varchar', length: 55, nullable: true })
   designation: string;
 
-  @Column({ nullable: true })
+  @Column({  type: 'varchar', length: 55, nullable: true })
   specialization: string;
 
-  @Column({ nullable: true })
+  @Column({  type: 'varchar', length: 55, nullable: true})
   collegeName: string;
 
   @Column({ nullable: true })
@@ -34,14 +34,14 @@ export class DoctorDetail {
   @Column({ nullable: true })
   clinicName?: string;
 
-  @Column({ nullable: true })
-  experienceYears?: number;
+  @Column({type:'int', nullable: true})
+  experienceYears: number;
 
   @Column({ type: 'text', nullable: true })
   profileimage: string;
 
   @Column({ type: 'text', nullable: true })
-  imagePath: string;
+  profileimagePath: string;
 
   @ManyToOne(() => Account, (account) => account.doctorDetail)
   account: Account;

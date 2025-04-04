@@ -13,19 +13,21 @@ export class UserDetailsService {
 
   constructor(
     @InjectRepository (UserDetail) private readonly userdetailRepo:Repository<UserDetail>,
+    @InjectRepository (Account) private readonly accountRepo:Repository<Account>,
   ){}
   async getProfile(id: string) {
-      const result = await this.userdetailRepo.createQueryBuilder('userDetail')
-        .leftJoinAndSelect('userDetail.account', 'account')
+      const result = await this.accountRepo.createQueryBuilder('account')
+        .leftJoinAndSelect('account.userDetail', 'userDetail')
         .select([
+          'account.id',
+          'account.email',
+          'account.roles',
           'userDetail.id',
           'userDetail.name',
           'userDetail.email',
           'userDetail.age',
           'userDetail.accountId',
-          'account.id',
-          'account.email',
-          'account.roles',
+         
         ])
         .where('userDetail.accountId = :id', { id: id })
         .getOne();

@@ -73,7 +73,7 @@ export class DoctorDetailsController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './upload/doctor/profile',
+        destination: './uploads/doctor/profile',
         filename: (req, file, callback) => {
           const randomName = Array(32)
             .fill(null)

@@ -93,8 +93,8 @@ export class DoctorDetailsService {
 
   async profileImage(image: string, result: DoctorDetail) {
     const obj = Object.assign(result, {
-      profileimage: process.env.PORT + image,// cahnges
-      imagePath: image,
+      profileimage: process.env.PORT+ image,
+      profileimagePath: image,
     });
     return this.DoctorRepo.save(obj);
   }

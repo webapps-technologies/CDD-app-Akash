@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsOptional, IsString, IsInt, Min, Max, IsDate, IsUrl } from 'class-validator';
 
 export class UpdateDoctorProfileDto {
@@ -35,6 +36,7 @@ export class UpdateDoctorProfileDto {
   profilePhoto: string;  
 
   @IsOptional()
+  @Type(() => Date) 
   @IsDate()
   dob: Date;  
 }

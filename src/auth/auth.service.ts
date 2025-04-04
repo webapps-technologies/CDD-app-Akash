@@ -71,7 +71,6 @@ export class AuthService {
       .where('account.PhoneNumber = :phoneNumber', { phoneNumber })
       .getOne();
     if (!result) {
-      console.log('Account not found!');
       throw new UnauthorizedException('Account not found!');
     }
     return result;
@@ -89,11 +88,13 @@ export class AuthService {
       email: Dto.email,
       roles: Dto.roles,
       status: DefaultStatus.ACTIVE,
+      
     });
     const savedAccount = await this.repo.save(payload);
     if (Dto.roles === UserRole.DOCTOR) {
       const doctorDetail = this.doctorrepo.create({
         email: Dto.email,
+    
         accountId: savedAccount.id,
       });
       await this.doctorrepo.save(doctorDetail);

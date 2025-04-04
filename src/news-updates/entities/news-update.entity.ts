@@ -17,7 +17,7 @@ export class NewsUpdate {
   @Column({ type: 'text', nullable: false })
   desc: string;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({ type: 'text', nullable: true})
   youtubeUrl: string;
 
   @Column({ type: 'text', nullable: true })

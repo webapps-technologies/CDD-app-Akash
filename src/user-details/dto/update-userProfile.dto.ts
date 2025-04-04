@@ -6,12 +6,17 @@ export class UpdateuserProfileDto {
   name: string;  
 
   @IsOptional()
+  @IsString()
+  gender: string; 
+
+  @IsOptional()
   @IsInt()
   age: number;  
 
   @IsOptional()
   @IsString()
   address: string; 
+  
 
    
 }

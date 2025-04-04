@@ -20,11 +20,12 @@ export class CaseHistory {
 
   @Column({ type: 'uuid', nullable: true })
   doctorId: string;
+  
   @Column({ type: 'uuid', nullable: true })
   userId: string;
 
-  @Column({})
-  UserAge: number;
+  @Column({type: 'varchar', length: 50, nullable: true })
+  UserAge: string;
 
   @Column({ type: 'text', nullable: true })
   UserGender: string;
