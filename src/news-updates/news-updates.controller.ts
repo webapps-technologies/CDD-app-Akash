@@ -44,7 +44,7 @@ export class NewsUpdatesController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './upload/whyChooseUs',
+        destination: './uploads/news&upate',
         filename: (req, file, callback) => {
           const randomName = Array(32)
             .fill(null)

@@ -10,7 +10,6 @@ import { MulterModule } from '@nestjs/platform-express';
 @Module({
   imports: [  TypeOrmModule.forFeature([DoctorDetail,Account]),
   AuthModule,
-
   ],
   controllers: [DoctorDetailsController],
   providers: [DoctorDetailsService],

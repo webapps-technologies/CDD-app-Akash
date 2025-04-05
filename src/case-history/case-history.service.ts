@@ -60,7 +60,7 @@ export class CaseHistoryService {
       .where('caseHistory.doctorId = :doctorId', { doctorId })
       .getManyAndCount();
     if (!result) {
-      throw new NotFoundException('  case history not found!');
+      throw new NotFoundException('case history not found!');
     }
     return { result, total };
   }

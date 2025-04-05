@@ -54,6 +54,7 @@ export class AuthService {
   //   const otp = Math.floor(1000 + Math.random() * 9000);
     const otp=1234;
     this.cacheManager.set(dto.phoneNumber, otp, 600 * 1000);
+      // await this.nodeMailerService.sendOtpInEmail(dto.email, otp);
     return {
      
       phoneNumber: dto.phoneNumber,
